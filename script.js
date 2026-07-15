@@ -7,52 +7,87 @@ const equals = document.querySelector(".equals")
 const clear = document.querySelector(".clear")
 const back = document.querySelector(".back")
 
-// console.log("hello world")
 
-// function add(a, b) {
-//     return +a + +b;
-// }
-
-// function subtract(a, b) {
-//     return +a - +b;
-// }
-
-// function multiply(a, b) {
-//     return +a * +b;
-// }
-
-// function divide(a, b) {
-//     return +a / +b;
-// }
+let firstOperand;
+let secondOperand;
+let operatorSign;
+let resultShown = false;
+let forwardCalculation = true;
 
 
-// function operate(operator, a, b) {
-//     if (operator == '+') {
-//        return add(a, b)
-//     } else if (operator == '-') {
-//         return subtract(a, b)
-//     } else if (operator == '*') {
-//         return multiply(a, b)
-//     } else if (operator == '/') {
-//         return divide(a, b)
-//     }
-// }
+numbers.forEach((button) => {
+    button.addEventListener("click", () => {
+        if (resultShown) {
+            clearDIsplay()
+            resultShown = false;
+        }
 
-// let displayNumber;
-// numbers.forEach((number) => {
-//     number.addEventListener("click", () => {
-//         displaytext.textContent += number.textContent;
-//         displayNumber = displaytext.textContent
-//     })
-// })
+        displaytext.textContent += button.textContent;
+    })
+})
 
-// let operatorSign;
-// operators.forEach((operator) => {
-//     operator.addEventListener("click", () => {
-//         displaytext.textContent = ""
-//         displaytext.textContent += operator.textContent;
-//         operatorSign = displaytext.textContent
-//         displaytext.textContent = ""
 
-//     })
-// })
+
+operators.forEach((button) => {
+    button.addEventListener("click", () => {
+        firstOperand = parseInt(displaytext.textContent);
+        displaytext.textContent = '';
+        operatorSign = button.textContent
+    })
+})
+
+
+function operate() {
+    switch (operatorSign) {
+        case "+":
+            return firstOperand + secondOperand;
+            break;
+
+        case "-":
+            return firstOperand - secondOperand;
+            break;
+
+        case "×":
+            return firstOperand * secondOperand;
+            break;
+
+        case "÷":
+            return firstOperand / secondOperand;
+            break;
+
+        default:
+    }
+}
+
+
+equals.addEventListener("click", () => {
+    if (firstOperand != null) {
+        secondOperand = parseInt(displaytext.textContent)
+    }
+    if ((secondOperand == null) || (Number.isNaN(secondOperand)) || (firstOperand == null) || (Number.isNaN(firstOperand))) {
+        displaytext.textContent = "error"
+        resultShown = true;
+
+    } else {
+        let result = operate()
+        displaytext.textContent = result;
+        resultShown = true;
+    }
+
+})
+
+
+clear.addEventListener("click", () => {
+    clearDIsplay();
+})
+
+back.addEventListener("click", () => {
+
+})
+
+function clearDIsplay() {
+    firstOperand = null;
+    secondOperand = null;
+    operatorSign = null;
+    displaytext.textContent = '';
+}
